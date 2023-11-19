@@ -117,8 +117,10 @@ const verifyToken = async (req, res) => {
 
     jwt.verify(token, TOKEN_SECRET, async (err, decodedUsuario) => {
         if (err) return res.status(401).json({ message: "No autorizado" });
-        const usuarioEncontrado = await usuario.findById(decodedUsuario.id);
+    
+        const usuarioEncontrado = await usuario.findById(decodedUsuario._id);
         if (!usuarioEncontrado) return res.status(401).json({ message: "No autorizado" });
+    
         return res.json({
             id: usuarioEncontrado._id,
             nombre: usuarioEncontrado.nombre,
